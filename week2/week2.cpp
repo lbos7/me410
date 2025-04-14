@@ -12,7 +12,7 @@
 #define ACC_CONV 6.0/65535
 #define GYR_CONV 2000.0/65535
 
-#define A 0.0125
+#define A 0.02
 
 #define MAX_ROT_SPEED    300 // deg/sec
 #define MAX_PITCH_ANGLE  45 // deg

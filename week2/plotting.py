@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 
-with open('week2/roll.csv', 'r') as file:
+with open('week2/csv/roll.csv', 'r') as file:
     csv_reader = csv.reader(file)
     data_list_roll = list(csv_reader)
 
-with open('week2/pitch.csv', 'r') as file:
+with open('week2/csv/pitch.csv', 'r') as file:
     csv_reader = csv.reader(file)
     data_list_pitch = list(csv_reader)
     
