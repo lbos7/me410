@@ -12,7 +12,7 @@
 #define ACC_CONV 6.0/65535
 #define GYR_CONV 2000.0/65535
 
-#define A 0.02
+#define A 0.0125
 
 #define MAX_ROT_SPEED    300 // deg/sec
 #define MAX_PITCH_ANGLE  45 // deg
@@ -158,9 +158,9 @@ void calibrate_imu()
   pitch_cal/=1000;
   accel_z_cal/=1000;
 
-  x_gyro_calibration = x_gyro_cal;
-  y_gyro_calibration = y_gyro_cal;
-  z_gyro_calibration = z_gyro_cal;
+  // x_gyro_calibration = x_gyro_cal;
+  // y_gyro_calibration = y_gyro_cal;
+  // z_gyro_calibration = z_gyro_cal;
   roll_calibration = roll_cal;
   pitch_calibration = pitch_cal;
   accel_z_calibration = accel_z_cal;
@@ -170,8 +170,6 @@ void calibrate_imu()
   time_now = 0;
   
   printf("calibration complete, %f %f %f %f %f %f\n\r",x_gyro_calibration,y_gyro_calibration,z_gyro_calibration,roll_calibration,pitch_calibration,accel_z_calibration);
-
-
 }
 
 void setup_joystick()
@@ -306,7 +304,7 @@ int setup_imu()
     printf("all i2c devices detected\n");
     sleep(1);
     wiringPiI2CWriteReg8(accel_address, 0x7d, 0x04); //power on accel    
-    wiringPiI2CWriteReg8(accel_address, 0x41, 0x00); //accel range to +_3g    
+    wiringPiI2CWriteReg8(accel_address, 0x41, 0x00); //accel range to +-3g    
     wiringPiI2CWriteReg8(accel_address, 0x40, 0x89); //high speed filtered accel
     
     wiringPiI2CWriteReg8(gyro_address, 0x11, 0x00);//power on gyro
@@ -358,17 +356,14 @@ void update_filter()
   //comp. filter for roll, pitch here: 
 
   float roll_gyro_delta = imu_data[4] * imu_diff;
-  float pitch_gyro_delta = imu_data[5]* imu_diff;
+  float pitch_gyro_delta = imu_data[5] * imu_diff;
 
 
   roll_angle = roll_acc * A + (1-A)*(roll_gyro_delta + roll_angle);
   pitch_angle = pitch_acc * A + (1-A)*(pitch_gyro_delta + pitch_angle);
 
-  roll_gyro += roll_gyro_delta;
-  pitch_gyro += pitch_gyro_delta;
+  roll_gyro = roll_gyro_delta + roll_gyro;
+  pitch_gyro = pitch_gyro_delta + pitch_gyro;
 
   printf("%f,%f,%f,%f,%f,%f,%f\n", time_now,roll_acc,roll_gyro,roll_angle,pitch_acc,pitch_gyro,pitch_angle); // blue red yellow
-
 }
-
-
