@@ -55,6 +55,7 @@ float pitch_calibration=0;
 float accel_z_calibration=0;
 float imu_data[6]; //accel xyz,  gyro xyz, 
 long time_curr;
+long joystickWatchdogTimer = 0;
 float time_now = 0;
 long time_prev;
 struct timespec te;
@@ -70,6 +71,8 @@ float pitch_gyro = 0;
 bool run_program = true;
 
 Joystick* shared_memory;
+
+int sequence_num = 0;
  
 int main (int argc, char *argv[])
 {
@@ -79,6 +82,8 @@ int main (int argc, char *argv[])
     signal(SIGINT, &trap);
     calibrate_imu();    
     sleep(3);
+    timespec_get(&te,TIME_UTC);
+    joystickWatchdogTimer=te.tv_nsec;
     while(run_program)
     {
       read_imu();
@@ -133,6 +138,34 @@ void safety_check()
     printf("Termination requested by user\n\r");
     trap(0);
     return;
+  }
+
+  // check for sequence_num timeout
+  time_curr = te.tv_nsec;
+
+  // Check if the sequence number is unchanged
+  if (joystick_data.sequence_num == sequence_num)
+  {
+      float joystick_diff = time_curr - joystickWatchdogTimer;
+  
+      // Handle nanosecond rollover at 1 second
+      if (joystick_diff <= 0)
+      {
+          joystick_diff += 1000000000;
+      }
+  
+      if (joystick_diff > 350000000)
+      {
+          printf("Joystick timeout!\n\r");
+          trap(0);
+          return;
+      }
+  }
+  else
+  {
+      // New joystick message received, so reset timer and sequence_num
+      joystickWatchdogTimer = time_curr;
+      sequence_num = joystick_data.sequence_num;
   }
 }
 
