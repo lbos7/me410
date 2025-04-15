@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
     while(run_program)
     {
       read_imu();
-      // safety_check();
+      safety_check();
       // printf("%10.5f %10.5f %10.5f %10.5f %10.5f\n\r",imu_data[3],imu_data[4],imu_data[5],roll_angle,pitch_angle);
     }
   
@@ -101,10 +101,11 @@ void safety_check()
 {
   // check if any gyro rate > 300 degrees/sec
 
-  for (int i = 2; i <6; i++)
+  for (int i = 3; i <6; i++)
   {
     if (imu_data[i] > MAX_ROT_SPEED || imu_data[i] < -MAX_ROT_SPEED)
     {
+      printf("Gyro exceeds max value!\n\r");
       trap(0);
       return;
     }
@@ -114,12 +115,14 @@ void safety_check()
 
   if (roll_angle > MAX_ROLL_ANGLE || roll_angle < -MAX_ROLL_ANGLE)
   {
+    printf("Roll exceeds max value!\n\r");
     trap(0);
     return;
   }
 
   if (pitch_angle > MAX_PITCH_ANGLE || pitch_angle < -MAX_PITCH_ANGLE)
   {
+    printf("Pitch exceeds max value!\n\r");
     trap(0); 
     return;
   }
@@ -127,6 +130,7 @@ void safety_check()
   Joystick joystick_data=*shared_memory;
   if (joystick_data.JOYSTICK_TER_BUTTON)
   {
+    printf("Termination requested by user\n\r");
     trap(0);
     return;
   }
