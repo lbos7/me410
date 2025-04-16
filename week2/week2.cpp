@@ -195,6 +195,7 @@ void calibrate_imu()
   pitch_cal/=1000;
   accel_z_cal/=1000;
 
+  // Gyro calibration commented out for plotting
   // x_gyro_calibration = x_gyro_cal;
   // y_gyro_calibration = y_gyro_cal;
   // z_gyro_calibration = z_gyro_cal;
@@ -392,15 +393,16 @@ void update_filter()
   
   //comp. filter for roll, pitch here: 
 
+  // Calculating pitch and roll based on gyro data for plot
   float roll_gyro_delta = imu_data[4] * imu_diff;
   float pitch_gyro_delta = imu_data[5] * imu_diff;
-
-
-  roll_angle = roll_acc * A + (1-A)*(roll_gyro_delta + roll_angle);
-  pitch_angle = pitch_acc * A + (1-A)*(pitch_gyro_delta + pitch_angle);
-
   roll_gyro = roll_gyro_delta + roll_gyro;
   pitch_gyro = pitch_gyro_delta + pitch_gyro;
 
-  printf("%f,%f,%f,%f,%f,%f,%f\n", time_now,roll_acc,roll_gyro,roll_angle,pitch_acc,pitch_gyro,pitch_angle); // blue red yellow
+  // Complementary filter
+  roll_angle = roll_acc * A + (1-A)*(roll_gyro_delta + roll_angle);
+  pitch_angle = pitch_acc * A + (1-A)*(pitch_gyro_delta + pitch_angle);
+
+  // Print statement for saving to .txt files
+  // printf("%f,%f,%f,%f,%f,%f,%f\n", time_now,roll_acc,roll_gyro,roll_angle,pitch_acc,pitch_gyro,pitch_angle); // blue red yellow
 }
