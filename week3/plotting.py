@@ -13,6 +13,10 @@ with open('week3/der.csv', 'r') as file:
 with open('week3/int.csv', 'r') as file:
     csv_reader = csv.reader(file)
     data_list_int = list(csv_reader)
+
+with open('week3/PID.csv', 'r') as file:
+    csv_reader = csv.reader(file)
+    data_list_pid = list(csv_reader)
     
 data_array_prop = np.array(data_list_prop, dtype=float)
 
@@ -32,6 +36,12 @@ data_array_int = data_array_int.T
 
 time_arr_int = data_array_int[0]
 
+data_array_pid = np.array(data_list_pid, dtype=float)
+
+data_array_pid = data_array_pid.T
+
+time_arr_pid = data_array_pid[0]
+
 fig = plt.figure(1)
 plt.plot(time_arr_prop, data_array_prop[1:].T)
 plt.xlabel('time (s)')
@@ -50,5 +60,12 @@ fig = plt.figure(3)
 plt.plot(time_arr_int, data_array_int[1:].T)
 plt.xlabel('time (s)')
 plt.title('Integral Control')
+plt.legend(['Pitch x10', 'Desired Pitch x10', 'Thrust', 'Motor Front', 'Motor Back'])
+plt.show()
+
+fig = plt.figure(4)
+plt.plot(time_arr_pid, data_array_pid[1:].T)
+plt.xlabel('time (s)')
+plt.title('PID Control')
 plt.legend(['Pitch x10', 'Desired Pitch x10', 'Thrust', 'Motor Front', 'Motor Back'])
 plt.show()
