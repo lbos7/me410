@@ -6,9 +6,9 @@ with open('week4/week4-milestone2.csv', 'r') as file:
     csv_reader = csv.reader(file)
     data_list2 = list(csv_reader)
 
-# with open('week3/der.csv', 'r') as file:
-#     csv_reader = csv.reader(file)
-#     data_list_der = list(csv_reader)
+with open('week4/week4-milestone3.csv', 'r') as file:
+    csv_reader = csv.reader(file)
+    data_list3 = list(csv_reader)
 
 # with open('week3/int.csv', 'r') as file:
 #     csv_reader = csv.reader(file)
@@ -26,6 +26,15 @@ data_array2[1, :] *= 10
 data_array2[2, :] *= 10
 
 time_arr2 = data_array2[0]
+
+data_array3 = np.array(data_list3, dtype=float)
+
+data_array3 = data_array3.T
+
+data_array3[1, :] *= 10
+
+time_arr3 = data_array3[0]
+
 
 # data_array_der = np.array(data_list_der, dtype=float)
 
@@ -49,7 +58,14 @@ fig = plt.figure(1)
 plt.plot(time_arr2, data_array2[1:].T)
 plt.xlabel('time (s)')
 plt.title('Proportional Control')
-plt.legend(['Pitch Unfiltered', 'Pitch Filtered', 'Motor Front', 'Motor Back'])
+plt.legend(['Pitch Unfiltered x10', 'Pitch Filtered x10', 'Motor Front', 'Motor Back'])
+plt.show()
+
+fig = plt.figure(2)
+plt.plot(time_arr3, data_array3[1:].T)
+plt.xlabel('time (s)')
+plt.title('Proportional Control')
+plt.legend(['Pitch Filtered x10', 'Gyro', 'Motor Front', 'Motor Back'])
 plt.show()
 
 # fig = plt.figure(2)
