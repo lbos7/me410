@@ -49,6 +49,7 @@ data_array4 = data_array4.T
 
 data_array4[1, :] *= 10
 data_array4[2, :] *= 10
+data_array4[3, :] *= 10
 
 time_arr4 = data_array4[0]
 
@@ -97,7 +98,7 @@ fig = plt.figure(3)
 plt.plot(time_arr4, data_array4[1:].T)
 plt.xlabel('time (s)')
 plt.title('PD Control')
-plt.legend(['Pitch Unfiltered x10','Pitch Filtered x10', 'Motor Front', 'Motor Back'])
+plt.legend(['Pitch Unfiltered x10','Pitch Filtered x10', 'Desired Pitch', 'Motor Front', 'Motor Back'])
 plt.show()
 
 fig = plt.figure(4)
