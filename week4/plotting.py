@@ -57,8 +57,8 @@ data_arrayA9 = np.array(data_listA9, dtype=float)
 
 data_arrayA9 = data_arrayA9.T
 
-data_arrayA9[1, :] *= 10
-data_arrayA9[2, :] *= 10
+data_arrayA9[1, :] *= 100
+data_arrayA9[2, :] *= 100
 
 time_arrA9 = data_arrayA9[0]
 
@@ -66,8 +66,8 @@ data_array99 = np.array(data_list99, dtype=float)
 
 data_array99 = data_array99.T
 
-data_array99[1, :] *= 10
-data_array99[2, :] *= 10
+data_array99[1, :] *= 100
+data_array99[2, :] *= 100
 
 time_arr99 = data_array99[0]
 
@@ -75,8 +75,8 @@ data_array89 = np.array(data_list89, dtype=float)
 
 data_array89 = data_array89.T
 
-data_array89[1, :] *= 10
-data_array89[2, :] *= 10
+data_array89[1, :] *= 100
+data_array89[2, :] *= 100
 
 time_arr89 = data_array89[0]
 
@@ -105,19 +105,19 @@ fig = plt.figure(4)
 plt.plot(time_arrA9, data_arrayA9[1:].T)
 plt.xlabel('time (s)')
 plt.title('0xA9 for ACC_CONF')
-plt.legend(['Pitch Unfiltered x10','Pitch Filtered x10', 'Motor Front', 'Motor Back'])
+plt.legend(['Pitch Unfiltered x100','Pitch Filtered x100', 'Motor Front', 'Motor Back'])
 plt.show()
 
 fig = plt.figure(5)
 plt.plot(time_arr99, data_array99[1:].T)
 plt.xlabel('time (s)')
 plt.title('0x99 for ACC_CONF')
-plt.legend(['Pitch Unfiltered x10','Pitch Filtered x10', 'Motor Front', 'Motor Back'])
+plt.legend(['Pitch Unfiltered x100','Pitch Filtered x100', 'Motor Front', 'Motor Back'])
 plt.show()
 
 fig = plt.figure(6)
 plt.plot(time_arr89, data_array89[1:].T)
 plt.xlabel('time (s)')
 plt.title('0x89 for ACC_CONF')
-plt.legend(['Pitch Unfiltered x10','Pitch Filtered x10', 'Motor Front', 'Motor Back'])
+plt.legend(['Pitch Unfiltered x100','Pitch Filtered x100', 'Motor Front', 'Motor Back'])
 plt.show()
